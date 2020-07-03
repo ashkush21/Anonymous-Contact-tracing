@@ -1,0 +1,51 @@
+<% include ../partials/header %>
+<div class="pull-right thumbnail suggestion">
+	<h4>Suggestion</h4>
+	<p>
+		Please add the time of the event in the description!
+	</p>
+	</div>
+<div class="container" style="word-wrap: break-word;">
+	<div class="col" style="width: 800px;">
+	<h1 style="text-align:center; color: black">Add New Event</h1>
+	<div style="width: 30%; margin: 25px auto;">
+	<form action="/events" method="POST" id="customised">
+		<div class="form-group" >
+			<label>Event name</label>
+			<input class="form-control" type="text" name="name">
+		</div>
+		<div class="form-group">
+			<label>Sample image</label>
+			<input class="form-control" type="text" name="image" placeholder="Sample image of event(optional)">	
+		</div>
+		<div class="form-group">
+			<label>Start Date</label>
+			<input class="form-control" type="date" name="eventDateStart" placeholder="event start date">
+		</div>
+		<div class="form-group">
+			<label>End Date</label>
+			<input class="form-control" type="date" name="eventDateEnd" placeholder="event end date">
+		</div>
+		<div class="form-group">
+			<label>Society Name</label>
+			<input class="form-control" type="text" name="societyName">	
+		</div>
+		<div class="form-group">
+			<label>Venue</label>
+			<input class="form-control" type="text" name="venue">	
+		</div>
+		<div class="form-group">
+			<label>Description</label>
+			<textarea class="form-control" name="description" rows="10"></textarea> 	
+		</div>		
+		<div class="form-group">
+		<input class="btn btn-lg btn-primary btn-default btn-block" type="submit">	
+		</div>
+	</form>
+	<a href="/events">Go back</a>
+	</div>
+		
+	</div>
+	
+</div>
+<% include ../partials/footer %>					

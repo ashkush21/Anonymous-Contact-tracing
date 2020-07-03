@@ -1,0 +1,133 @@
+
+body{
+	padding-top: 100px;
+	background: url(https://wallpapercave.com/wp/FcF2xMV.jpg);
+   	background-repeat: no-repeat;
+    background-size: cover;
+    background-position:0 0;   
+}
+
+.thumbnail img {
+	width: 100%;
+}
+
+.thumbnail {
+	padding: 0;
+}
+
+.thumbnail .caption-full {
+	padding: 10px ;
+}
+
+#delete{
+	display: inline;
+}
+
+.navbar-brand{
+	padding-top: 2px;
+	margin: 0;	
+	  
+}
+
+
+.navbar-brand img{
+	border-radius: 30px;
+	box-shadow: 3px 3px 5px rgba(43, 183, 229,0.4),
+              3px 5px 5px rgba(43, 183, 229,0.3),
+              3px 2px 2px rgba(43, 183, 229,0.2);
+    background-color: white;          
+}
+
+#header-navbar {
+	font-size: 20px;
+	padding: 20px;	
+	text-align: center;
+	border-radius:20px;
+	background:rgba(237, 0, 79, 0.7);
+	  box-shadow: 3px 5px 5px rgba(43, 183, 229,0.4),
+              3px 8px 5px rgba(43, 183, 229,0.3),
+              3px 8px 5px rgba(43, 183, 229,0.2);
+}
+
+.navbar-collapse{
+	padding-bottom: 30px;
+}
+
+.header-header{
+	padding-top: 20px;
+}
+
+.events{
+	text-align: center;
+}
+
+.hrstyle{
+	height: 10px;
+	border: 0;
+	box-shadow: 0 10px 10px -10px #8c8b8b inset;
+}
+
+.suggestion{
+	background-color: rgba(255, 246, 0, 0.6);
+	text-align: center;
+}
+
+.suggestion{
+	padding: 5px 0;
+}
+
+/*css for header file*/
+#customised{
+	font-size: 20px;
+	color:black;
+}
+/*
+#customiseda{
+	font-size: 20px;
+	color:black;
+}*/
+
+/*css for main index page*/
+#frontpage{
+	color: rgba(237, 0, 79, 0.8);
+/*background: url(https://wallpapercave.com/wp/FcF2xMV.jpg);
+background-position: center;
+background-size: cover;
+*/}
+
+#frontpage h3{
+	font-size: 30px;
+}
+
+#showbox {
+	background: black;
+	box-shadow: 1px 1px 8px pink inset,
+				-1px -1px 8px pink inset,
+				 -4px -4px 30px blue;
+}
+#showbox img{
+	padding: 10px;
+	height: 130px;
+}
+
+#showbox .caption{
+		color: rgb(255, 255, 255);
+
+}
+
+/*css for show page*/
+
+.showdiv{
+	padding-top: 50px;
+}
+
+.showEventName{
+	color: rgb(229, 0, 0);
+	font-size: 50px;
+	word-wrap: break-word;
+	text-shadow: -4px -4px 8px rgba(255, 73, 73, 0.7)
+}
+
+#eventdescription{
+	word-wrap: break-word;
+}

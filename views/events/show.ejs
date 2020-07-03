@@ -1,0 +1,77 @@
+<% include ../partials/header %>
+<div class="container showdiv">
+	<div class="row">
+		<div class="col-md-3">
+				<p class="lead showEventName"><%=event.name%></p>
+<!-- 			<div class="list-group">
+				<li class="list-group-item active">Info 1</li>
+				<li class="list-group-item">Info 2</li>
+				<li class="list-group-item">Info 3</li>
+
+			</div> -->
+		</div>
+			<div class="col-md-9">
+				<div class="thumbnail">
+					<img class="img-responsive" src="<%=event.image%>" alt="Event Img">
+					<div class="caption-full">
+					<h4><a href=""><%=event.name%></a></h4>	
+					<p id="eventdescription">
+						<%=event.description%>
+					</p>
+					<p>
+						<strong>Venue:</strong> <%=event.venue%>
+					</p>
+					<p>
+						<strong>Start Date:</strong> <%=event.eventDateStart.toDateString()%>
+					</p>
+					<p>
+						<strong>End Date:</strong> <%=event.eventDateEnd.toDateString()%>
+					</p>
+					<p><em>Sumitted By <%=event.author.username%></em></p>
+					<% if(currentUser && event.author.id.equals(currentUser._id)){
+						 var date= new Date();
+						if(!(date.getTime() > event.eventDateEnd.getTime())){ %>
+						<a class="btn btn-warning btn-xs" href="/events/<%=event._id%>/edit">Edit Event</a>
+							<% } %>
+						<form  id="delete" action="/events/<%=event._id%>?_method=DELETE" method="POST">
+						<button class="btn btn-xs btn-danger">Delete</button>
+					<% } %>
+					</form>						
+					</div>
+				</div>
+				<div class="well">
+					<div class="text-right">
+						<h4>Any query?</h4>
+					<a class="btn btn-success" href="/events/<%=event._id%>/comments/new">Ask</a>
+					</div>
+				    <hr> 
+					<% event.comments.forEach(function(comment){%>
+					<div class="row">
+						<div class="col-md-12">
+							<strong><%= comment.author.username.toUpperCase()%></strong>
+							<span class="pull-right"> <%=moment(comment.createdAt).fromNow() %> </span>
+							<p>
+							<%=comment.text%>
+							</p>
+							<% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+							<a class="btn btn-xs btn-warning" href="/events/<%=event._id%>/comments/<%=comment._id%>/edit">
+							Edit
+							</a>
+							<form id="delete" action="/events/<%=event._id%>/comments/<%=comment._id%>?_method=DELETE" method="POST">
+								<button class="btn btn-danger btn-xs">Delete</button>
+							</form>
+						<% } %>	
+						</div>
+					</div>	
+					
+					<%});%>
+				</div>
+			</div>		
+	</div>
+</div>
+
+
+
+
+
+<%include ../partials/footer %>
