@@ -5,7 +5,6 @@ var User  = require("../models/user");
 var middleware = require("../middleware");
 var getmac = require("getmac");
 
-
 //root route
 router.get("/", function(req, res){
 	res.redirect("/events");
@@ -22,18 +21,23 @@ router.get("/register", function(req, res){
 router.post("/register", function(req, res){
 	// console.log(getmac.default());
 
-	var newUser = new User({username: getmac.default()});
-	User.register(newUser, "123", function(err, user){
-		if(err){
-			console.log(err.message);
-			req.flash("error", err.message);
-			return res.redirect("/register");
-		}
-			passport.authenticate("local")(req, res, function(){
-			req.flash("success", "Successfully signed up. Welcome " + user.username);	
-			res.redirect("/events"); 
-		});
-	});
+  console.log("Successfully posted")
+
+  console.log(req.body);
+  // res.render("login");
+  res.redirect("login");
+	// var newUser = new User({username: getmac.default()});
+	// User.register(newUser, "123", function(err, user){
+	// 	if(err){
+	// 		console.log(err.message);
+	// 		req.flash("error", err.message);
+	// 		return res.redirect("/register");
+	// 	}
+	// 		passport.authenticate("local")(req, res, function(){
+	// 		req.flash("success", "Successfully signed up. Welcome " + user.username);	
+	// 		res.redirect("/events"); 
+	// 	});
+	// });
 });
 //login route
 router.get("/login", function(req, res){

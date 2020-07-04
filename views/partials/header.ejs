@@ -6,26 +6,23 @@
  	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css">
  	<link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
  </head>
- <body>
+ <!-- <body onload="checkAndRegister()"> -->
+ 	<body>
+ 	<script src="https://cdnjs.cloudflare.com/ajax/libs/pouchdb/7.2.1/pouchdb.min.js"></script>
 
  	<div class="ui huge menu inverted">
  		<div class="header item">
  			Anonymous contact tracing
  		</div>
 
- 		<% if(!currentUser){%>
  		<a class="item" href="/login">
  			Login
  		</a>
- 		<a class="item" href="/register">
+ 		<a class="item" onclick="checkAndRegister()">
  			Sign Up
  		</a>
- 		<% 	}
- 		else{%>
- 		<a href="#" class="item">Signed in as <%=currentUser.username.toUpperCase()%></a>
- 		<a href="/logout" class="item">Logout</a>				
- 		<%  }%>
 
  	</div>
+ 	<script type="text/javascript" src="register.js"></script>
 
 
