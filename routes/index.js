@@ -3,6 +3,7 @@ var router = express.Router();
 var passport = require("passport");
 var User  = require("../models/user");
 var middleware = require("../middleware");
+var getmac = require("getmac");
 
 
 //root route
@@ -19,9 +20,12 @@ router.get("/register", function(req, res){
 
 //handle signup route
 router.post("/register", function(req, res){
-	var newUser = new User({username: req.body.username});
-	User.register(newUser, req.body.password, function(err, user){
+	// console.log(getmac.default());
+
+	var newUser = new User({username: getmac.default()});
+	User.register(newUser, "123", function(err, user){
 		if(err){
+			console.log(err.message);
 			req.flash("error", err.message);
 			return res.redirect("/register");
 		}
@@ -37,13 +41,59 @@ router.get("/login", function(req, res){
 });
 
 //login logic
-router.post("/login",passport.authenticate("local",
-	{
-		successRedirect: "/events",
-		failureRedirect: "/login",
-		failureFlash: true
-	}), function(req, res){
+router.post('/login', (req, res, next) => {
+  	req.body.username = getmac.default();
+  	req.body.password = "123";
+  passport.authenticate('local',
+  (err, user, info) => {
+  	// console.log(req.body);
+  	console.log(info);
+    if (err) {
+    	// console.log(err.message)	
+      return next(err);
+    }
+
+    if (!user) {
+      return res.redirect('/login?info=' + info);
+    }
+
+    req.logIn(user, function(err) {
+      if (err) {
+        return next(err);
+      }
+
+      return res.redirect('/');
+    });
+
+  })(req, res, next);
 });
+// router.post("/login",passport.authenticate("local",
+// 	// {
+// 	// 	successRedirect: "/events",
+// 	// 	failureRedirect: "/login",
+// 	// 	failureFlash: true
+// 	// }
+// 	(err, user, info) => {
+//     if (err) {
+//       return next(err);
+//     }
+
+//     if (!user) {
+//       return res.redirect('/login?info=' + info);
+//     }
+
+//     req.logIn(user, function(err) {
+//       if (err) {
+//         return next(err);
+//       }
+
+//       return res.redirect('/');
+//     });
+
+//   })
+// 	), function(req, res){
+// 	console.log("logged in Successfully")
+// });
 
 
 //logout route
