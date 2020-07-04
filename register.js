@@ -53,7 +53,7 @@ function register(){
 
 }
 
-dbUser.get("user").then(x => console.log(x['id']));
+// dbUser.get("user").then(x => console.log(x['id']));
 
 // register();
 
@@ -83,6 +83,8 @@ async function checkAndRegister(){
     if(doc === 1){
         sendUuid();
     }
-    else register();
 
 }
+
+
+

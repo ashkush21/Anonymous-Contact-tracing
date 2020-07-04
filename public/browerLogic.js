@@ -125,22 +125,47 @@ let warningPoints = [];
 
 
 
+function addToWarning(){
+
+    if(warningPoints.length() === 0)
+    return;
+
+    let cache = Array.from(warningPoints);
+    warningPoints = [];
+    dbWaring.bulkDocs(cache);
+}
+
+
 async function covidListener(){
 
-    let user = await dbUser.get(userId);
-    let covidPoints = user['covidIds'];
-    let res = await fetch('');
+    let user = await dbUser.get('user');
+    let userId = user['id'];
+    let res = await fetch('/getCovid',{
+        method : 'GET',
+        body : JSON.stringify({userId})
+    });
     let obj = await res.json();
 
     // some more logic
-    let userDataPoints = await dbPoints.allDocs({});
+
+    if(!obj["present"])
+        return;
+
+
+    let userDataPoints = await dbPoints.allDocs({
+        include_docs: true,
+        attachments: true
+      });
+
+    userDataPoints = userDataPoints['rows'].map(x=> x['doc']);
     // more logic
 
-    if(statement){
-        warningPoints.push({_id : new Date().toISOString(), points: calcWarning(userDataPoints, obj)});
-    }
+    warningPoints.push({_id : new Date().toISOString(), points: calcWarning(userDataPoints, obj)});
+    
 
 }
+
+setInterval(addToWarning, 10000);
 
 
 
@@ -148,6 +173,42 @@ async function covidListener(){
 // ----------------------------Dom manipulations -------------------------------------------
 
 // on refresh update warning list
+
+
+let refresh = document.getElementById('refresh');
+
+async function updateWarning(){
+
+    let warnings = await dbWaring.allDocs({
+        include_docs: true,
+        attachments: true
+      });
+
+    warnings = warnings['rows'].map(x=> x['doc']);
+
+    let table = document.getElementById('list');
+
+    warnings.forEach(warning =>{
+
+        if(warning['points']>5){
+            
+            let entry = `
+            <tr>
+                <td id = "warningId">${waring["_id"]}</td>
+                <td id = "warningPoints">${order["points"]}</td>
+            </tr>`;
+
+            table.insertAdjacentHTML("beforeend", entry);
+        }
+
+    });
+
+}
+
+refresh.addEventListener('click', updateWarning);
+
+
+
 
 
 
