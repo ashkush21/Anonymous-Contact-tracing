@@ -170,9 +170,3 @@ async function covidListener(){
 
 
 
-
-
-
-
-
-
