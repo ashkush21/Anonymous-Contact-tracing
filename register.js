@@ -35,9 +35,8 @@ var options = {
         id : uuid,
         referencePoints : [{latitude , longitude}],
     }).then(()=>{
-
+        sendUuid();
     })
-
   }
   
   function error(err) {
@@ -54,25 +53,36 @@ function register(){
 
 }
 
+dbUser.get("user").then(x => console.log(x['id']));
+
 // register();
 
+async function sendUuid(){
+    const user = await dbUser.get("user");
+    const {id, referencePoints} = user;
+    const url = '/uuid'
+
+    fetch(url, { method: 'POST', redirect: 'follow', body: JSON.stringify({id, referencePoints})})
+    .then(response => {
+        // HTTP 301 response
+    })
+    .catch(function(err) {
+        console.info(err + " url: " + url);
+    });
+}
 
 
 
 
-// async function checkAndRegister(){
 
-//     const info = await dbUser.info();
-//     const doc = info['doc_count'];
+async function checkAndRegister(){
 
-//     if(doc === 1){
-//         const user = await dbUser.get({"user"});
-//         await fetch('',{
-//             method : 'POST',
-//             isPresent : true
-//         })
-//     }
+    const info = await dbUser.info();
+    const doc = info['doc_count'];
 
-//     else register();
+    if(doc === 1){
+        sendUuid();
+    }
+    else register();
 
-// }
+}
