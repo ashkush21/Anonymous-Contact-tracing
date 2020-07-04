@@ -4,17 +4,39 @@ var passport = require("passport");
 var User  = require("../models/user");
 var middleware = require("../middleware");
 var getmac = require("getmac");
+let curretUserData = {};
 
-isloggedin = false;
+
 //root route
 router.get("/", function(req, res){
+  // console.log(data);
   if(!isloggedin)
     res.redirect("/events");
   else
     res.redirect("/afterregister");
 });
 
+router.get("/continuous", (req, res)=>{
+  let tobesent = curretUserData["listToBeSent"];
+  let totalCovid = curretUserData["totalCovid"];
+  if(typeof tobesent !== 'undefined' && tobesent.length > 0){
+    let elementBeingSent = tobesent.pop();
+    totalCovid.push(elementBeingSent);
+    
+  }
 
+})
+
+
+router.get("/getpatients", (req, res)=>{
+  // let id = req.body.uid;
+  let id = "58f53983-23ee-44f7-b2ea-6232738f1e28";
+  User.collection.find({"uid": id}).toArray().then(items=>{
+    // console.log(items);
+    curretUserData = items;
+    res.redirect("/");
+  });
+})
 
 //show register form
 router.get("/register", function(req, res){

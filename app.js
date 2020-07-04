@@ -14,6 +14,7 @@
 		eventRoutes = require("./routes/events"),
 		authRoutes       = require("./routes/index");
 
+isloggedin = false;
 
 mongoose.connect("mongodb://localhost:27017/CSIproject", { useNewUrlParser: true });
 //mongodb://<dbuser>:<dbpassword>@ds135540.mlab.com:35540/csiproject 
