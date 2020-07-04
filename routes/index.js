@@ -5,27 +5,68 @@ var User  = require("../models/user");
 var middleware = require("../middleware");
 var getmac = require("getmac");
 
+isloggedin = false;
 //root route
 router.get("/", function(req, res){
-	res.redirect("/events");
+  if(!isloggedin)
+    res.redirect("/events");
+  else
+    res.redirect("/afterregister");
 });
 
 
 
 //show register form
 router.get("/register", function(req, res){
-	res.render("register");
+  if(!isloggedin)
+	 res.render("register");
+  else
+    res.render("./afterRegistration")
 });
+
+
+router.get("/afterregister", (req, res)=>{
+  console.log(isloggedin)
+  res.render("./afterRegistration");
+})
+
 
 //handle signup route
 router.post("/register", function(req, res){
 	// console.log(getmac.default());
 
-  console.log("Successfully posted")
+  // console.log("Successfully posted")
+  if(isloggedin){
+    res.redirect("/afterregister");
+  }
+  else{
+    console.log(req.body);
+    console.log(isloggedin);
 
-  console.log(req.body);
+    let refpoint = [{
+      "lat": req.body.referencePoints[0]["latitude"],
+      "long": req.body.referencePoints[0]["longitude"]
+    }];
+    console.log(refpoint);
+    let id = req.body.id;
+    let listToBeSent = [];
+    let covid = [];
+    let newUser = new User({uid: id, listToBeSent: listToBeSent, referencepoints: refpoint, totalCovid: covid});
+    User.create(newUser, (err, newcreated)=>{
+      if(err){
+        console.log(err);
+      // console.log("error in creating user");
+    }
+    else{
+      isloggedin = true;
+      console.log("Successfully created user");
+      res.redirect("/afterregister");
+    }
+  })
+
+  }
   // res.render("login");
-  res.redirect("login");
+  // res.redirect("login");
 	// var newUser = new User({username: getmac.default()});
 	// User.register(newUser, "123", function(err, user){
 	// 	if(err){
@@ -46,9 +87,9 @@ router.get("/login", function(req, res){
 
 //login logic
 router.post('/login', (req, res, next) => {
-  	req.body.username = getmac.default();
-  	req.body.password = "123";
-  passport.authenticate('local',
+ req.body.username = getmac.default();
+ req.body.password = "123";
+ passport.authenticate('local',
   (err, user, info) => {
   	// console.log(req.body);
   	console.log(info);
